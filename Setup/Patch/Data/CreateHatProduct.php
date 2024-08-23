@@ -19,30 +19,79 @@ use Magento\InventoryApi\Api\Data\SourceItemInterfaceFactory;
 use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
+/**
+ * Class Hat Product Class
+ * @package Scandiweb\Test\Setup\Patch\Data
+ */
 class CreateHatProduct implements DataPatchInterface
 {
+    /**
+     * @var ModuleDataSetupInterface
+     */
     protected ModuleDataSetupInterface $setup;
 
+    /**
+     * @var ProductInterfaceFactory
+     */
     protected ProductInterfaceFactory $productInterfaceFactory;
 
+    /**
+     * @var ProductRepositoryInterface
+     */
     protected ProductRepositoryInterface $productRepository;
 
+    /**
+     * @var State
+     */
     protected State $appState;
 
+    /**
+     * @var EavSetup
+     */
     protected EavSetup $eavSetup;
 
+    /**
+     * @var StoreManagerInterface
+     */
     protected StoreManagerInterface $storeManager;
 
+    /**
+     * @var SourceItemInterfaceFactory
+     */
     protected SourceItemInterfaceFactory $sourceItemFactory;
 
+    /**
+     * @var SourceItemsSaveInterface
+     */
     protected SourceItemsSaveInterface $sourceItemsSaveInterface;
 
+    /**
+     * @var CategoryLinkManagementInterface
+     */
     protected CategoryLinkManagementInterface $categoryLink;
 
+    /**
+     * @var CategoryCollectionFactory
+     */
     protected CategoryCollectionFactory $categoryCollectionFactory;
 
+    /**
+     * @var array
+     */
     protected array $sourceItems = [];
 
+    /** 
+     * @param ModuleDataSetupInterface 
+     * @param ProductInterfaceFactory
+     * @param ProductRepositoryInterface
+     * @param State
+     * @param StoreManagerInterface
+     * @param EavSetup
+     * @param SourceItemInterfaceFactory
+     * @param SourceItemsSaveInterface
+     * @param CategoryLinkManagementInterface
+     * @param CategoryCollectionFactory
+     */
     public function __construct(
         ModuleDataSetupInterface $setup,
         ProductInterfaceFactory $productInterfaceFactory,
@@ -67,22 +116,34 @@ class CreateHatProduct implements DataPatchInterface
         $this->categoryCollectionFactory = $categoryCollectionFactory;
     }
 
+    /**
+     * @return array
+     */
     public static function getDependencies(): array
     {
         return [];
     }
 
+    /**
+     * @return array
+     */
     public function getAliases(): array
     {
         return [];
     }
 
+    /**
+     * @return bool
+     */
     public function apply(): bool
     {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
         return true;
     }
 
+    /**
+     * @return void
+     */
     public function execute(): void
     {
         // Create Product
