@@ -151,7 +151,6 @@ class CreateHatProduct implements DataPatchInterface
      * @throws LocalizedException
      * @throws NoSuchEntityException
      * @throws ValidateException
-     * 
      * @return void
      */
     public function execute(): void
