@@ -2,7 +2,7 @@
 
 namespace Scandiweb\Test\Setup\Patch\Data;
 
-use \Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Catalog\Api\CategoryLinkManagementInterface;
 use Magento\Catalog\Api\Data\ProductInterfaceFactory;
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -76,19 +76,19 @@ class CreateHatProduct implements DataPatchInterface
     {
         return [];
     }
-    
+
     public function apply()
     {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
         return true;
     }
 
-    public function execute()
+    public function execute(): void
     {
         // Create Product
         $product = $this->productInterfaceFactory->create();
 
-        // Check if the ID slready exists.
+        // Check if the ID already exists.
         if ($product->getIdBySku('some-hat-product')) {
             return;
         }
