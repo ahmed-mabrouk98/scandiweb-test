@@ -73,8 +73,6 @@ class CreateHatProduct implements DataPatchInterface
         return [];
     }
 
-    public function getVersion() {}
-
     public function getAliases()
     {
         return [];
