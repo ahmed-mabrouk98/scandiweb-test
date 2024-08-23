@@ -81,6 +81,8 @@ class CreateHatProduct implements DataPatchInterface
     protected array $sourceItems = [];
 
     /** 
+     * Migration Patch Constructor
+     * 
      * @param ModuleDataSetupInterface 
      * @param ProductInterfaceFactory
      * @param ProductRepositoryInterface
@@ -117,7 +119,7 @@ class CreateHatProduct implements DataPatchInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public static function getDependencies(): array
     {
@@ -125,7 +127,7 @@ class CreateHatProduct implements DataPatchInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getAliases(): array
     {
@@ -133,6 +135,8 @@ class CreateHatProduct implements DataPatchInterface
     }
 
     /**
+     * Add new product
+     * 
      * @return bool
      */
     public function apply(): bool
@@ -142,6 +146,12 @@ class CreateHatProduct implements DataPatchInterface
     }
 
     /**
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     * @throws ValidateException
+     * 
      * @return void
      */
     public function execute(): void
@@ -168,6 +178,16 @@ class CreateHatProduct implements DataPatchInterface
 
         // Save product
         $product = $this->productRepository->save($product);
+
+        // Setting item source quantity
+        $sourceItem = $this->sourceItemFactory->create();
+        $sourceItem->setSourceCode('default');
+        $sourceItem->setQuantity(25);
+        $sourceItem->setSku($product->getSku());
+        $sourceItem->setStatus(SourceItemInterface::STATUS_IN_STOCK);
+        $this->sourceItems[] = $sourceItem;
+
+        $this->sourceItemsSaveInterface->execute($this->sourceItems);
 
         // Add product to category
         $this->categoryLink->assignProductToCategories($product->getSku(), [11]);
