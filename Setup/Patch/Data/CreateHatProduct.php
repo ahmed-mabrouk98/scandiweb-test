@@ -67,17 +67,17 @@ class CreateHatProduct implements DataPatchInterface
         $this->categoryCollectionFactory = $categoryCollectionFactory;
     }
 
-    public static function getDependencies()
+    public static function getDependencies(): array
     {
         return [];
     }
 
-    public function getAliases()
+    public function getAliases(): array
     {
         return [];
     }
 
-    public function apply()
+    public function apply(): bool
     {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
         return true;
