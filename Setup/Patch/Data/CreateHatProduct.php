@@ -21,7 +21,6 @@ use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCo
 
 class CreateHatProduct implements DataPatchInterface
 {
-
     protected ModuleDataSetupInterface $setup;
 
     protected ProductInterfaceFactory $productInterfaceFactory;
@@ -77,6 +76,7 @@ class CreateHatProduct implements DataPatchInterface
     {
         return [];
     }
+    
     public function apply()
     {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
